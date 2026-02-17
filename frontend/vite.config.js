@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
+    host: true,
     proxy: {
       '/api': {
         target: 'https://api.balldontlie.io',
@@ -12,5 +13,9 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true
   }
 })
