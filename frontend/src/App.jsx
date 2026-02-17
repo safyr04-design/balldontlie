@@ -6,9 +6,10 @@ import Models from './pages/Models';
 import Predictions from './pages/Predictions';
 import FactorAnalysis from './pages/FactorAnalysis';
 import Settings from './pages/Settings';
+import ApiDocs from './pages/ApiDocs';
 import { 
   Activity, BarChart3, Brain, TrendingUp, Settings as SettingsIcon,
-  LogOut, Menu, X, Sparkles, ChevronLeft, ChevronRight
+  LogOut, Menu, X, Sparkles, ChevronLeft, ChevronRight, Book
 } from 'lucide-react';
 
 function App() {
@@ -77,6 +78,11 @@ function AnimatedRoutes({ apiKey }) {
         <Route path="/settings" element={
           <PageTransition>
             <Settings apiKey={apiKey} />
+          </PageTransition>
+        } />
+        <Route path="/api-docs" element={
+          <PageTransition>
+            <ApiDocs apiKey={apiKey} />
           </PageTransition>
         } />
       </Routes>
@@ -302,6 +308,7 @@ function Sidebar({ isOpen, setIsOpen }) {
     { path: '/models', icon: Brain, label: 'Models', color: 'purple' },
     { path: '/predictions', icon: TrendingUp, label: 'Predictions', color: 'green' },
     { path: '/analysis', icon: BarChart3, label: 'Analysis', color: 'yellow' },
+    { path: '/api-docs', icon: Book, label: 'API Docs', color: 'blue' },
     { path: '/settings', icon: SettingsIcon, label: 'Settings', color: 'gray' },
   ];
 
