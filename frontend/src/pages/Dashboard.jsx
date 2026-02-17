@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   TrendingUp, TrendingDown, DollarSign, Target, Calendar,
-  Activity, Sparkles, ArrowRight, ChevronRight, Award
+  Activity, Sparkles, ArrowRight, ChevronRight, Award, Wrench,
+  Book, Zap, Shield, Star
 } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -60,10 +62,67 @@ export default function Dashboard({ apiKey }) {
             Here's what's happening with your betting models today.
           </p>
         </div>
-        <button className="btn btn-primary flex items-center gap-2">
+        <Link to="/model-builder" className="btn btn-primary flex items-center gap-2">
           <Sparkles className="w-4 h-4" />
           Create Model
-        </button>
+        </Link>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Link to="/model-builder" className="card card-hover p-6 group">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-gradient-to-br from-primary-500 to-purple-600 rounded-xl">
+              <Wrench className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-white mb-1">Model Builder</h3>
+              <p className="text-sm text-gray-400 mb-3">
+                Create new betting models with guided wizard
+              </p>
+              <div className="flex items-center gap-2 text-sm text-primary-400">
+                <span>Build a model</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        <Link to="/api-docs" className="card card-hover p-6 group">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl">
+              <Book className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-white mb-1">API Explorer</h3>
+              <p className="text-sm text-gray-400 mb-3">
+                Test endpoints with interactive documentation
+              </p>
+              <div className="flex items-center gap-2 text-sm text-blue-400">
+                <span>Explore APIs</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        <Link to="/predictions" className="card card-hover p-6 group">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
+              <TrendingUp className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-white mb-1">Live Predictions</h3>
+              <p className="text-sm text-gray-400 mb-3">
+                View today's high-confidence picks
+              </p>
+              <div className="flex items-center gap-2 text-sm text-green-400">
+                <span>See predictions</span>
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </div>
+        </Link>
       </div>
 
       {/* Stats Grid */}
@@ -98,6 +157,108 @@ export default function Dashboard({ apiKey }) {
           change={`${stats.todaysPicks} today`}
           color="yellow"
         />
+      </div>
+
+      {/* Featured Model Templates */}
+      <div className="card p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2">
+            <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+            <h3 className="text-lg font-semibold text-white">Featured Model Templates</h3>
+          </div>
+          <Link to="/model-builder" className="text-sm text-primary-400 hover:text-primary-300 flex items-center gap-1">
+            View all
+            <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Link to="/model-builder" className="card card-hover p-4 group">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="p-2 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-lg border border-blue-500/30">
+                <Shield className="w-5 h-5 text-blue-400" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-white mb-1">NBA Rest & Defense</h4>
+                <p className="text-xs text-gray-400">Situational + Defense focus</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 text-sm mb-3">
+              <div>
+                <span className="text-gray-500 text-xs">Win Rate</span>
+                <p className="text-green-400 font-semibold">54.2%</p>
+              </div>
+              <div>
+                <span className="text-gray-500 text-xs">ROI</span>
+                <p className="text-blue-400 font-semibold">+3.8%</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-primary-400">
+              <span>Use template</span>
+              <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link to="/model-builder" className="card card-hover p-4 group">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="p-2 bg-gradient-to-br from-orange-500/20 to-orange-600/20 rounded-lg border border-orange-500/30">
+                <Zap className="w-5 h-5 text-orange-400" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-white mb-1">Offensive Explosion</h4>
+                <p className="text-xs text-gray-400">High-scoring games</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 text-sm mb-3">
+              <div>
+                <span className="text-gray-500 text-xs">Win Rate</span>
+                <p className="text-green-400 font-semibold">53.8%</p>
+              </div>
+              <div>
+                <span className="text-gray-500 text-xs">ROI</span>
+                <p className="text-blue-400 font-semibold">+2.9%</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-primary-400">
+              <span>Use template</span>
+              <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link to="/model-builder" className="card card-hover p-4 group">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="p-2 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-lg border border-purple-500/30">
+                <Target className="w-5 h-5 text-purple-400" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-white mb-1">Home Court Value</h4>
+                <p className="text-xs text-gray-400">Strong home teams</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 text-sm mb-3">
+              <div>
+                <span className="text-gray-500 text-xs">Win Rate</span>
+                <p className="text-green-400 font-semibold">55.1%</p>
+              </div>
+              <div>
+                <span className="text-gray-500 text-xs">ROI</span>
+                <p className="text-blue-400 font-semibold">+4.2%</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-xs text-primary-400">
+              <span>Use template</span>
+              <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        </div>
+        
+        <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+          <div className="flex items-start gap-2">
+            <Sparkles className="w-4 h-4 text-blue-400 mt-0.5" />
+            <p className="text-sm text-blue-300">
+              These templates are based on the official BDL Lab walkthrough with proven historical performance.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Charts Section */}
