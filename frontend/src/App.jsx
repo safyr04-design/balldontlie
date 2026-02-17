@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate 
 import { motion, AnimatePresence } from 'framer-motion';
 import Dashboard from './pages/Dashboard';
 import Models from './pages/Models';
+import ModelBuilder from './pages/ModelBuilder';
 import Predictions from './pages/Predictions';
 import FactorAnalysis from './pages/FactorAnalysis';
 import Settings from './pages/Settings';
 import ApiDocs from './pages/ApiDocs';
 import { 
   Activity, BarChart3, Brain, TrendingUp, Settings as SettingsIcon,
-  LogOut, Menu, X, Sparkles, ChevronLeft, ChevronRight, Book
+  LogOut, Menu, X, Sparkles, ChevronLeft, ChevronRight, Book, Wrench
 } from 'lucide-react';
 
 function App() {
@@ -83,6 +84,11 @@ function AnimatedRoutes({ apiKey }) {
         <Route path="/api-docs" element={
           <PageTransition>
             <ApiDocs apiKey={apiKey} />
+          </PageTransition>
+        } />
+        <Route path="/model-builder" element={
+          <PageTransition>
+            <ModelBuilder apiKey={apiKey} />
           </PageTransition>
         } />
       </Routes>
@@ -306,6 +312,7 @@ function Sidebar({ isOpen, setIsOpen }) {
   const navItems = [
     { path: '/', icon: Activity, label: 'Dashboard', color: 'primary' },
     { path: '/models', icon: Brain, label: 'Models', color: 'purple' },
+    { path: '/model-builder', icon: Wrench, label: 'Model Builder', color: 'orange' },
     { path: '/predictions', icon: TrendingUp, label: 'Predictions', color: 'green' },
     { path: '/analysis', icon: BarChart3, label: 'Analysis', color: 'yellow' },
     { path: '/api-docs', icon: Book, label: 'API Docs', color: 'blue' },
