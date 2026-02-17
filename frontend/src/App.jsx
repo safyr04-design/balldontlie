@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Dashboard from './pages/Dashboard';
 import Models from './pages/Models';
@@ -8,7 +8,7 @@ import FactorAnalysis from './pages/FactorAnalysis';
 import Settings from './pages/Settings';
 import { 
   Activity, BarChart3, Brain, TrendingUp, Settings as SettingsIcon,
-  LogOut, Menu, X, Sparkles
+  LogOut, Menu, X, Sparkles, ChevronLeft, ChevronRight
 } from 'lucide-react';
 
 function App() {
@@ -195,6 +195,33 @@ function ApiKeyPrompt({ onSubmit }) {
 }
 
 function Header({ apiKey, onClearApiKey, toggleSidebar }) {
+  const navigate = useNavigate();
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [canGoForward, setCanGoForward] = useState(false);
+
+  useEffect(() => {
+    // Check navigation state
+    const updateNavState = () => {
+      setCanGoBack(window.history.length > 1);
+      // Forward state is harder to track, we'll enable it optimistically
+      setCanGoForward(window.history.state?.idx > 0);
+    };
+    
+    updateNavState();
+    window.addEventListener('popstate', updateNavState);
+    return () => window.removeEventListener('popstate', updateNavState);
+  }, []);
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    }
+  };
+
+  const handleForward = () => {
+    navigate(1);
+  };
+
   return (
     <header className="bg-dark-900 border-b border-dark-800 px-6 py-4 flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -204,7 +231,40 @@ function Header({ apiKey, onClearApiKey, toggleSidebar }) {
         >
           <Menu className="w-5 h-5" />
         </button>
-        <div>
+        
+        {/* Back/Forward Navigation Controls */}
+        <div className="flex items-center gap-1 px-2 py-1 bg-dark-800 rounded-lg border border-dark-700">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleBack}
+            disabled={!canGoBack}
+            className={`
+              p-2 rounded-md transition-all
+              ${canGoBack 
+                ? 'hover:bg-dark-700 text-gray-300 hover:text-white cursor-pointer' 
+                : 'text-gray-600 cursor-not-allowed opacity-50'
+              }
+            `}
+            title="Go back"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </motion.button>
+          
+          <div className="w-px h-6 bg-dark-700"></div>
+          
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleForward}
+            className="p-2 rounded-md hover:bg-dark-700 text-gray-300 hover:text-white transition-all"
+            title="Go forward"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </motion.button>
+        </div>
+
+        <div className="hidden sm:block">
           <h2 className="text-xl font-semibold text-gray-100">
             Sports Betting Dashboard
           </h2>
